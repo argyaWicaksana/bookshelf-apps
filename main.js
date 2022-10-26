@@ -203,29 +203,43 @@ document.addEventListener(RENDER_SEARCH, ()=>{
     }
 })
 
-function renderEdit(bookId){
-    const container = document.querySelector(`#id-${bookId}`)
+function renderEdit(bookId) {
+    console.log('tes')
+    const container = document.createElement('div')    
+    container.classList.add('editContainer')
     const book = findBook(bookId)
+
     const editForm = document.createElement('form')
-    container.innerHTML = ''
+    const inputContainer = document.createElement('div')
+    inputContainer.classList.add('input', 'editForm')
+
+    const closeBtn = document.createElement('div')
+    closeBtn.classList.add('close-btn')
+    closeBtn.addEventListener('click', ()=> container.remove())
 
     const inputTitle = document.createElement('input')
     inputTitle.setAttribute('type', 'text')
     inputTitle.setAttribute('id', 'editTitle')
     inputTitle.setAttribute('value', book.title)
-    inputTitle.style.display = 'block'
+    const labelTitle = document.createElement('label')
+    labelTitle.setAttribute('for', 'editTitle')
+    labelTitle.innerText = 'Judul'
 
     const inputAuthor = document.createElement('input')
     inputAuthor.setAttribute('type', 'text')
     inputAuthor.setAttribute('id', 'editAuthor')
     inputAuthor.setAttribute('value', book.author)
-    inputAuthor.style.display = 'block'
+    const labelAuthor = document.createElement('label')
+    labelAuthor.setAttribute('for', 'editAuthor')
+    labelAuthor.innerText = 'Penulis'
 
     const inputYear = document.createElement('input')
     inputYear.setAttribute('type', 'number')
     inputYear.setAttribute('id', 'editYear')
     inputYear.setAttribute('value', book.year)
-    inputYear.style.display = 'block'
+    const labelYear = document.createElement('label')
+    labelYear.setAttribute('for', 'editYear')
+    labelYear.innerText = 'Tahun'
 
     const save = document.createElement('button')
     save.setAttribute('type', 'submit')
@@ -234,20 +248,23 @@ function renderEdit(bookId){
 
     const cancel = document.createElement('button')
     cancel.classList.add('red')
-    cancel.addEventListener('click', ()=> document.dispatchEvent(new Event(RENDER_EVENT)))
+    cancel.addEventListener('click', ()=> container.remove())
     cancel.innerText = 'Cancel'
 
     const btnContainer = document.createElement('div')
     btnContainer.classList.add('action')
     btnContainer.append(save, cancel)
 
-    editForm.append(inputTitle, inputAuthor, inputYear, btnContainer)
-    container.append(editForm)
+    inputContainer.append(labelTitle, inputTitle, labelAuthor, inputAuthor, labelYear, inputYear)
+    editForm.append(inputContainer, btnContainer)
+    container.append(closeBtn, editForm)
+    document.body.append(container)
 
     editForm.addEventListener('submit', (event)=>{
         event.preventDefault()
         editBook(bookId)
-  })
+        container.remove()
+    })
 }
 
 function editBook(bookId) {

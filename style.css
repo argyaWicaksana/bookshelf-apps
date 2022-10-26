@@ -42,7 +42,7 @@ main {
     color: cornflowerblue;
 }
 
-.input_section > form > .input {
+.input {
     margin: 8px 0;
 }
 
@@ -61,7 +61,7 @@ main {
     font-weight: bold;
 }
 
-.input_section > form > .input > input {
+.input > input {
     display: block;
     width: 100%;
     padding: 8px;
@@ -69,7 +69,7 @@ main {
 }
 
 
-.input_section > form > .input > label {
+.input > label {
     color: cornflowerblue;
     font-weight: bold;
 }
@@ -173,4 +173,39 @@ button {
 .blue {
     background-color: cornflowerblue;
     color: white;
+}
+
+.editContainer{
+    z-index: 2;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.733);
+    position: fixed;
+    top: 0;
+}
+
+.close-btn{
+    display: flex;
+    justify-content: right;
+    padding-right: 20px;
+}
+
+.close-btn::after{
+    content: "\00d7";
+    font-size: 3em;
+    color: rgb(182, 182, 182);
+    cursor: pointer;
+}
+
+.editContainer form{
+    margin: 20px auto;
+    width: 55%;
+    height: 80%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.editForm input{
+    margin-bottom: 20px;
 }
