@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
     
     checkbox.addEventListener('change', ()=>{
         if (checkbox.checked) {
-            document.querySelector('span').innerText = 'Selesai dibaca'
+            document.querySelector('span').innerText = 'done'
         } else {
-            document.querySelector('span').innerText = 'Belum selesai dibaca'
+            document.querySelector('span').innerText = 'not done'
         }
     })
 
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
 function isStorageExist(){
   if (typeof (Storage) === undefined) {
-    alert('Browser kamu tidak mendukung local storage')
+    alert('Your browser does not support local storage')
     return false
   }
   return true
@@ -82,17 +82,17 @@ function makeBook(bookObject) {
     bookTitle.innerText = bookObject.title
 
     const bookAuthor = document.createElement('p')
-    bookAuthor.innerText = `Penulis: ${bookObject.author}`
+    bookAuthor.innerText = `Author: ${bookObject.author}`
 
     const bookYear = document.createElement('p')
-    bookYear.innerText = `Tahun: ${bookObject.year}`
+    bookYear.innerText = `Year: ${bookObject.year}`
 
     const btnGreen = document.createElement('button')
     btnGreen.classList.add('green')
 
     const btnRed = document.createElement('button') 
     btnRed.classList.add('red')
-    btnRed.innerText = 'Hapus buku'
+    btnRed.innerText = 'Delete'
     btnRed.addEventListener('click', ()=> removeBook(bookObject.id))
 
     const btnBlue = document.createElement('button')
@@ -110,11 +110,11 @@ function makeBook(bookObject) {
     article.append(bookTitle, bookAuthor, bookYear, btnContainer)
 
     if(bookObject.isComplete) {
-        btnGreen.innerText = 'Belum selesai dibaca'
+        btnGreen.innerText = 'Not Done Reading'
         btnGreen.addEventListener('click', ()=> undoBookFromCompleted(bookObject.id))
     }
     else {
-        btnGreen.innerText = 'Selesai dibaca'
+        btnGreen.innerText = 'Done Reading'
         btnGreen.addEventListener('click', ()=> addBookToCompleted(bookObject.id))
     }
 
@@ -204,7 +204,6 @@ document.addEventListener(RENDER_SEARCH, ()=>{
 })
 
 function renderEdit(bookId) {
-    console.log('tes')
     const container = document.createElement('div')    
     container.classList.add('editContainer')
     const book = findBook(bookId)
@@ -223,7 +222,7 @@ function renderEdit(bookId) {
     inputTitle.setAttribute('value', book.title)
     const labelTitle = document.createElement('label')
     labelTitle.setAttribute('for', 'editTitle')
-    labelTitle.innerText = 'Judul'
+    labelTitle.innerText = 'Title'
 
     const inputAuthor = document.createElement('input')
     inputAuthor.setAttribute('type', 'text')
@@ -231,7 +230,7 @@ function renderEdit(bookId) {
     inputAuthor.setAttribute('value', book.author)
     const labelAuthor = document.createElement('label')
     labelAuthor.setAttribute('for', 'editAuthor')
-    labelAuthor.innerText = 'Penulis'
+    labelAuthor.innerText = 'Author'
 
     const inputYear = document.createElement('input')
     inputYear.setAttribute('type', 'number')
@@ -239,7 +238,7 @@ function renderEdit(bookId) {
     inputYear.setAttribute('value', book.year)
     const labelYear = document.createElement('label')
     labelYear.setAttribute('for', 'editYear')
-    labelYear.innerText = 'Tahun'
+    labelYear.innerText = 'Year'
 
     const save = document.createElement('button')
     save.setAttribute('type', 'submit')
@@ -269,12 +268,9 @@ function renderEdit(bookId) {
 
 function editBook(bookId) {
     const targetIndex = findBookIndex(bookId)
-    console.log(bookList[targetIndex])
     bookList[targetIndex].title = document.querySelector('#editTitle').value
     bookList[targetIndex].author = document.querySelector('#editAuthor').value
     bookList[targetIndex].year = document.querySelector('#editYear').value
-    console.log('tess')
-    console.log(bookList[targetIndex])
 
     document.dispatchEvent(new Event(RENDER_EVENT))
     saveData()
